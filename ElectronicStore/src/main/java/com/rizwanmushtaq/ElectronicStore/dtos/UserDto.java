@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.dtos;
 
+import com.rizwanmushtaq.ElectronicStore.validate.ImageNameValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -25,5 +26,6 @@ public class UserDto {
   private String gender;
   @NotBlank(message = "About is required")
   private String about;
+  @ImageNameValid
   private String imageName;
 }
