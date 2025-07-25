@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
+import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,14 @@ public class UserController {
   }
 
   @DeleteMapping("/{userId}")
-  public ResponseEntity<UserDto> deleteUser(@PathVariable("userId") String userId) {
-    return new ResponseEntity<>(userService.deleteUser(userId), HttpStatus.OK);
+  public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable("userId") String userId) {
+    userService.deleteUser(userId);
+    ApiResponseMessage responseMessage = ApiResponseMessage
+        .builder()
+        .message("User deleted successfully")
+        .success(true)
+        .status(HttpStatus.OK)
+        .build();
+    return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 }
