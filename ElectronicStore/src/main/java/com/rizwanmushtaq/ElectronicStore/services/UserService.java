@@ -11,6 +11,8 @@ public interface UserService {
 
   UserDto getUserByEmail(String email);
 
+  List<UserDto> searchUsers(String keyword);
+
   List<UserDto> getAllUsers();
 
   UserDto updateUser(String id, UserDto user);

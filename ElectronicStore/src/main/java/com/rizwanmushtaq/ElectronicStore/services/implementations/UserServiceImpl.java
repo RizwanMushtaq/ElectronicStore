@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,37 +22,59 @@ public class UserServiceImpl implements UserService {
     userDto.setId(userId);
     User userEntity = dtoToEntity(userDto);
     User savedUser = userRepository.save(userEntity);
-    UserDto newuserDto = entityToDto(savedUser);
-    return newuserDto;
+    return entityToDto(savedUser);
   }
 
   @Override
   public UserDto getUserById(String id) {
-    return null;
+    User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    return entityToDto(user);
   }
 
   @Override
   public UserDto getUserByEmail(String email) {
-    return null;
+    User user = userRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    return entityToDto(user);
+  }
+
+  @Override
+  public List<UserDto> searchUsers(String keyword) {
+    List<User> users = userRepository.findByNameContaining(keyword);
+    return users.stream()
+        .map(user -> entityToDto(user))
+        .collect(Collectors.toList());
   }
 
   @Override
   public List<UserDto> getAllUsers() {
-    return List.of();
+    List<User> users = userRepository.findAll();
+    return users.stream()
+        .map(user -> entityToDto(user))
+        .collect(Collectors.toList());
   }
 
   @Override
-  public UserDto updateUser(String id, UserDto user) {
-    return null;
+  public UserDto updateUser(String id, UserDto userdto) {
+    User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    existingUser.setPassword(userdto.getPassword());
+    existingUser.setUsername(userdto.getUsername());
+    existingUser.setAbout(userdto.getAbout());
+    existingUser.setGender(userdto.getGender());
+    existingUser.setImageName(userdto.getImageName());
+    existingUser.setName(userdto.getName());
+    return entityToDto(existingUser);
   }
 
   @Override
   public UserDto deleteUser(String id) {
-    return null;
+    User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    userRepository.delete(user);
+    return entityToDto(user);
   }
 
   private UserDto entityToDto(User user) {
-    UserDto userDto = UserDto.builder()
+    return UserDto.builder()
         .id(user.getId())
         .email(user.getEmail())
         .password(user.getPassword())
@@ -59,14 +82,12 @@ public class UserServiceImpl implements UserService {
         .about(user.getAbout())
         .gender(user.getGender())
         .imageName(user.getImageName())
-        .firstName(user.getFirstName())
-        .lastName(user.getLastName())
+        .name(user.getName())
         .build();
-    return userDto;
   }
 
   private User dtoToEntity(UserDto userDto) {
-    User user = User.builder()
+    return User.builder()
         .id(userDto.getId())
         .email(userDto.getEmail())
         .password(userDto.getPassword())
@@ -74,9 +95,7 @@ public class UserServiceImpl implements UserService {
         .about(userDto.getAbout())
         .gender(userDto.getGender())
         .imageName(userDto.getImageName())
-        .firstName(userDto.getFirstName())
-        .lastName(userDto.getLastName())
+        .name(userDto.getName())
         .build();
-    return user;
   }
 }

@@ -19,8 +19,7 @@ public class User {
   private String id;
   @Column(unique = true, nullable = false)
   private String username;
-  private String firstName;
-  private String lastName;
+  private String name;
   @Column(nullable = false)
   private String password;
   @Column(unique = true, nullable = false)
