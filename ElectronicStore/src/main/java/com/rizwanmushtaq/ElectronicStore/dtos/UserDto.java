@@ -1,7 +1,7 @@
 package com.rizwanmushtaq.ElectronicStore.dtos;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -18,7 +18,8 @@ public class UserDto {
   private String name;
   @NotBlank(message = "Password is required")
   private String password;
-  @Email(message = "Invalid Email format")
+  @Pattern(regexp = "^(?!.*\\.\\.)([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$",
+      message = "Invalid Email format")
   private String email;
   @Size(min = 4, max = 6, message = "Invalid Gender")
   private String gender;
