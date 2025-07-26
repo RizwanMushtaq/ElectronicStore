@@ -2,6 +2,7 @@ package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
+import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -30,14 +31,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto getUserById(String id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     return modelMapper.map(user, UserDto.class);
   }
 
   @Override
   public UserDto getUserByEmail(String email) {
     User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+        .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
     return modelMapper.map(user, UserDto.class);
   }
 
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto updateUser(String id, UserDto userdto) {
-    User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    User existingUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     existingUser.setPassword(userdto.getPassword());
     existingUser.setUsername(userdto.getUsername());
     existingUser.setAbout(userdto.getAbout());
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto deleteUser(String id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     userRepository.delete(user);
     return modelMapper.map(user, UserDto.class);
   }
