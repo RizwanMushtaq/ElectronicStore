@@ -13,7 +13,7 @@ public interface UserService {
 
   List<UserDto> searchUsers(String keyword);
 
-  List<UserDto> getAllUsers();
+  List<UserDto> getAllUsers(int pageNumber, int pageSize);
 
   UserDto updateUser(String id, UserDto user);
 
