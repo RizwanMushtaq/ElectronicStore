@@ -1,6 +1,7 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
+import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import jakarta.validation.Valid;
@@ -41,7 +42,7 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<List<UserDto>> getAllUsers(
+  public ResponseEntity<PageableResponse<UserDto>> getAllUsers(
       @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
       @RequestParam(value = "pageSize", defaultValue = "10",
           required = false) int pageSize,

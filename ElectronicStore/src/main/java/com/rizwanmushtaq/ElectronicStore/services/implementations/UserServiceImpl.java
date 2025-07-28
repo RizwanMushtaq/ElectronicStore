@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
+import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
@@ -55,14 +56,22 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir) {
+  public PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir) {
     Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
     Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
     Page<User> userPage = userRepository.findAll(pageable);
     List<User> users = userPage.getContent();
-    return users.stream()
+    List<UserDto> userDtos = users.stream()
         .map(user -> modelMapper.map(user, UserDto.class))
         .collect(Collectors.toList());
+    PageableResponse<UserDto> pageableResponse = new PageableResponse<>();
+    pageableResponse.setContent(userDtos);
+    pageableResponse.setPageNumber(userPage.getNumber());
+    pageableResponse.setPageSize(userPage.getSize());
+    pageableResponse.setTotalElements(userPage.getTotalElements());
+    pageableResponse.setTotalPages(userPage.getTotalPages());
+    pageableResponse.setLastPage(userPage.isLast());
+    return pageableResponse;
   }
 
   @Override

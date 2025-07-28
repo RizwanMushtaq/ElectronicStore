@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.services;
 
+import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserService {
 
   List<UserDto> searchUsers(String keyword);
 
-  List<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir);
+  PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir);
 
   UserDto updateUser(String id, UserDto user);
 
