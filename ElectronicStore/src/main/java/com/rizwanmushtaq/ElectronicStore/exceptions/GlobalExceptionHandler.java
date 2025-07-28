@@ -44,4 +44,15 @@ public class GlobalExceptionHandler {
     });
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(BadApiRequest.class)
+  public ResponseEntity<ApiResponseMessage> resourceNotFoundExceptionHandler(BadApiRequest exception) {
+    logger.info("Bad Api Request: {}", exception.getMessage());
+    ApiResponseMessage response = ApiResponseMessage.builder()
+        .message(exception.getMessage())
+        .status(HttpStatus.BAD_REQUEST)
+        .success(false)
+        .build();
+    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+  }
 }
