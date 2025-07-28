@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir) {
     Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-    Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
     Page<User> userPage = userRepository.findAll(pageable);
     return Helper.getPageableResponse(userPage, UserDto.class);
   }
