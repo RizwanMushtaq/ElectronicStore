@@ -4,6 +4,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
+import com.rizwanmushtaq.ElectronicStore.helper.Helper;
 import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -60,18 +61,7 @@ public class UserServiceImpl implements UserService {
     Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
     Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
     Page<User> userPage = userRepository.findAll(pageable);
-    List<User> users = userPage.getContent();
-    List<UserDto> userDtos = users.stream()
-        .map(user -> modelMapper.map(user, UserDto.class))
-        .collect(Collectors.toList());
-    PageableResponse<UserDto> pageableResponse = new PageableResponse<>();
-    pageableResponse.setContent(userDtos);
-    pageableResponse.setPageNumber(userPage.getNumber());
-    pageableResponse.setPageSize(userPage.getSize());
-    pageableResponse.setTotalElements(userPage.getTotalElements());
-    pageableResponse.setTotalPages(userPage.getTotalPages());
-    pageableResponse.setLastPage(userPage.isLast());
-    return pageableResponse;
+    return Helper.getPageableResponse(userPage, UserDto.class);
   }
 
   @Override
