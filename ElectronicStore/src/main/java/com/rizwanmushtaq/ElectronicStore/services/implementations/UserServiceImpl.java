@@ -23,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto createUser(UserDto userDto) {
-    String userId = UUID.randomUUID().toString();
+    String userId = Helper.getUUID();
     userDto.setId(userId);
     User userEntity = modelMapper.map(userDto, User.class);
     User savedUser = userRepository.save(userEntity);

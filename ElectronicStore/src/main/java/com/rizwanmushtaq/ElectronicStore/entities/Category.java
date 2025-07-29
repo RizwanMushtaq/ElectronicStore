@@ -1,6 +1,9 @@
 package com.rizwanmushtaq.ElectronicStore.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Getter
@@ -13,7 +16,6 @@ import lombok.*;
 @Table(name = "categories")
 public class Category {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
   @Column(length = 60, nullable = false, unique = true)
   private String title;

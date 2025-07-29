@@ -24,6 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public CategoryDto create(CategoryDto categoryDto) {
+    String id = Helper.getUUID();
+    categoryDto.setId(id);
     Category category = mapper.map(categoryDto, Category.class);
     Category savedCategory = categoryRepository.save(category);
     return mapper.map(savedCategory, CategoryDto.class);

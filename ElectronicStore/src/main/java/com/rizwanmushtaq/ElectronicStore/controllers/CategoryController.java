@@ -4,6 +4,8 @@ import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.CategoryDto;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
+  Logger logger = LoggerFactory.getLogger(CategoryController.class);
   @Autowired
   private CategoryService categoryService;
 
   @PostMapping
-  public ResponseEntity<CategoryDto> create(CategoryDto categoryDto) {
+  public ResponseEntity<CategoryDto> create(@RequestBody CategoryDto categoryDto) {
+    logger.info("Creating new category with: {}", categoryDto);
     CategoryDto createdCategory = categoryService.create(categoryDto);
     return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
   }
@@ -42,7 +46,7 @@ public class CategoryController {
     return new ResponseEntity<>(categoryService.getById(categoryId), HttpStatus.OK);
   }
 
-  @GetMapping("/{categoryTile}")
+  @GetMapping("/title/{categoryTile}")
   public ResponseEntity<CategoryDto> getCategoryByTitle(@PathVariable String categoryTile) {
     return new ResponseEntity<>(categoryService.getByTitle(categoryTile), HttpStatus.OK);
   }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Helper {
@@ -30,5 +31,9 @@ public class Helper {
   public static Sort getSortObject(String sortDir, String sortBy) {
     return sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() :
         Sort.by(sortBy).ascending();
+  }
+
+  public static String getUUID() {
+    return UUID.randomUUID().toString();
   }
 }
