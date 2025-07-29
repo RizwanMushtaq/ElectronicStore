@@ -28,4 +28,5 @@ public class Product {
   private Date addedDate;
   private boolean live;
   private boolean stocked;
+  private String productImageName;
 }

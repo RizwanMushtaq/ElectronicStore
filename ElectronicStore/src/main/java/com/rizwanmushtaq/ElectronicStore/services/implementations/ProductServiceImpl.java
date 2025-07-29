@@ -8,22 +8,32 @@ import com.rizwanmushtaq.ElectronicStore.helper.Helper;
 import com.rizwanmushtaq.ElectronicStore.repositories.ProductRepository;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+  Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
   @Autowired
   private ProductRepository productRepository;
   @Autowired
   private ModelMapper modelMapper;
+  @Value("${product.image.path}")
+  private String imagePath;
 
   @Override
   public ProductDto create(ProductDto productDto) {
@@ -92,6 +102,17 @@ public class ProductServiceImpl implements ProductService {
     Product product = productRepository.findById(id).orElseThrow(
         () -> new ResourceNotFoundException("Product with given id not found: " + id)
     );
+    if (product.getProductImageName() != null) {
+      String fullImagePath = imagePath + product.getProductImageName();
+      try {
+        Path path = Paths.get(fullImagePath);
+        Files.delete(path);
+        logger.info("Image deleted successfully: {}", fullImagePath);
+      } catch (IOException exception) {
+        logger.error("Error deleting image: {}", fullImagePath);
+        exception.printStackTrace();
+      }
+    }
     productRepository.delete(product);
   }
 }
