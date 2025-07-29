@@ -4,6 +4,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.CategoryDto;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CategoryController {
   private CategoryService categoryService;
 
   @PostMapping
-  public ResponseEntity<CategoryDto> create(@RequestBody CategoryDto categoryDto) {
+  public ResponseEntity<CategoryDto> create(@Valid @RequestBody CategoryDto categoryDto) {
     logger.info("Creating new category with: {}", categoryDto);
     CategoryDto createdCategory = categoryService.create(categoryDto);
     return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
@@ -54,7 +55,7 @@ public class CategoryController {
   @PutMapping("/{categoryId}")
   public ResponseEntity<CategoryDto> updateCategoryById(
       @PathVariable String categoryId,
-      @RequestBody CategoryDto categoryDto
+      @Valid @RequestBody CategoryDto categoryDto
   ) {
     CategoryDto updatedCategory = categoryService.updateById(categoryId, categoryDto);
     return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
