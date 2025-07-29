@@ -7,6 +7,8 @@ import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+  Logger logger = LoggerFactory.getLogger(UserController.class);
   @Autowired
   private UserService userService;
   @Autowired
@@ -88,7 +91,9 @@ public class UserController {
   ) {
     String imageName = fileService.uploadImage(image, imageUploadPath);
     UserDto user = userService.getUserById(userId);
+    logger.info("Image name: {}", imageName);
     user.setImageName(imageName);
+    logger.info("User: {}", user);
     userService.updateUser(userId, user);
     ImageResponse imageResponse = ImageResponse
         .builder()

@@ -73,7 +73,8 @@ public class UserServiceImpl implements UserService {
     existingUser.setGender(userdto.getGender());
     existingUser.setImageName(userdto.getImageName());
     existingUser.setName(userdto.getName());
-    return modelMapper.map(existingUser, UserDto.class);
+    User savedUser = userRepository.save(existingUser);
+    return modelMapper.map(savedUser, UserDto.class);
   }
 
   @Override
