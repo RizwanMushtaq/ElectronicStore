@@ -16,9 +16,8 @@ import lombok.*;
 @Table(name = "categories")
 public class Category {
   @Id
-  @Column(name = "id")
-  private String categoryId;
-  @Column(length = 60, nullable = false)
+  private String id;
+  @Column(length = 60, nullable = false, unique = true)
   private String title;
   @Column(length = 500, nullable = false)
   private String description;
