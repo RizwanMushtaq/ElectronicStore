@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,5 +36,9 @@ public class Helper {
 
   public static String getUUID() {
     return UUID.randomUUID().toString();
+  }
+
+  public static Date getCurrentDate() {
+    return new Date();
   }
 }

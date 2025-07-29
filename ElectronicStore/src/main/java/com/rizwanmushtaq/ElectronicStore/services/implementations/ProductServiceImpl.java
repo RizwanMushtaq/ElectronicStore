@@ -26,8 +26,11 @@ public class ProductServiceImpl implements ProductService {
   private ModelMapper modelMapper;
 
   @Override
-  public ProductDto create(ProductDto ProductDto) {
-    Product product = modelMapper.map(ProductDto, Product.class);
+  public ProductDto create(ProductDto productDto) {
+    String id = Helper.getUUID();
+    productDto.setId(id);
+    productDto.setAddedDate(Helper.getCurrentDate());
+    Product product = modelMapper.map(productDto, Product.class);
     Product savedProduct = productRepository.save(product);
     return modelMapper.map(savedProduct, ProductDto.class);
   }
