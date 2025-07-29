@@ -89,7 +89,6 @@ public class UserController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
-  // upload user image
   @PostMapping("/image/{userId}")
   public ResponseEntity<ImageResponse> uploadUserImage(
       @RequestParam("userImage") MultipartFile image,
@@ -111,7 +110,6 @@ public class UserController {
     return new ResponseEntity<>(imageResponse, HttpStatus.CREATED);
   }
 
-  // serve user image
   @GetMapping("/image/{userId}")
   public void serveUserImage(
       @PathVariable String userId,

@@ -8,19 +8,30 @@ import com.rizwanmushtaq.ElectronicStore.helper.Helper;
 import com.rizwanmushtaq.ElectronicStore.repositories.CategoryRepository;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
+  Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
   @Autowired
   private CategoryRepository categoryRepository;
   @Autowired
   private ModelMapper mapper;
+  @Value("${category.image.path}")
+  private String imagePath;
 
   @Override
   public CategoryDto create(CategoryDto categoryDto) {
@@ -72,6 +83,17 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.findById(id).orElseThrow(
             () -> new ResourceNotFoundException("Category not found with id:" + id)
         );
+    if (existingCategory.getCoverImage() != null) {
+      String fullImagePath = imagePath + existingCategory.getCoverImage();
+      try {
+        Path path = Paths.get(fullImagePath);
+        Files.delete(path);
+        logger.info("Image deleted successfully: {}", fullImagePath);
+      } catch (IOException exception) {
+        logger.error("Error deleting image: {}", fullImagePath);
+        exception.printStackTrace();
+      }
+    }
     categoryRepository.delete(existingCategory);
   }
 }
