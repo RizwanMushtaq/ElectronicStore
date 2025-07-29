@@ -34,6 +34,7 @@ public class FileServiceImpl implements FileService {
         if (!folder.exists()) {
           folder.mkdirs();
         }
+        //TODO: Check if the file already exits, so delete it
         Files.copy(file.getInputStream(), Paths.get(fullPathWithFileName));
         return fileNameWithExtension;
       } catch (Exception e) {
