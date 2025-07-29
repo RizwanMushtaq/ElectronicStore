@@ -101,8 +101,8 @@ public class ProductController {
       @RequestParam("productImage") MultipartFile image,
       @PathVariable String productId
   ) {
-    String imageName = fileService.uploadImage(image, imageUploadPath);
     ProductDto product = productService.getById(productId);
+    String imageName = fileService.uploadImage(image, imageUploadPath);
     logger.info("Image name: {}", imageName);
     product.setProductImageName(imageName);
     logger.info("Product: {}", product);
