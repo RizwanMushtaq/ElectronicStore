@@ -18,5 +18,5 @@ public interface UserService {
 
   UserDto updateUser(String id, UserDto user);
 
-  UserDto deleteUser(String id);
+  void deleteUser(String id);
 }

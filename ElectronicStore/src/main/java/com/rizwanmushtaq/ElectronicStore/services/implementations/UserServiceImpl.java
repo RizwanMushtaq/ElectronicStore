@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDto deleteUser(String id) {
+  public void deleteUser(String id) {
     User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     if (user.getImageName() != null) {
       String fullImagePath = imagePath + user.getImageName();
@@ -101,7 +101,6 @@ public class UserServiceImpl implements UserService {
       }
     }
     userRepository.delete(user);
-    return modelMapper.map(user, UserDto.class);
   }
 }
 

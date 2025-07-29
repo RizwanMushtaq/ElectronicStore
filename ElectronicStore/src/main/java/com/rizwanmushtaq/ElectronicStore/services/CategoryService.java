@@ -1,0 +1,16 @@
+package com.rizwanmushtaq.ElectronicStore.services;
+
+import com.rizwanmushtaq.ElectronicStore.dtos.CategoryDto;
+import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
+
+public interface CategoryService {
+  CategoryDto create(CategoryDto category);
+
+  CategoryDto getById(String id);
+
+  PageableResponse<CategoryDto> getAll(int pageNumber, int pageSize, String sortBy, String sortDir);
+
+  CategoryDto updateById(String id, CategoryDto category);
+
+  void deleteById(String id);
+}
