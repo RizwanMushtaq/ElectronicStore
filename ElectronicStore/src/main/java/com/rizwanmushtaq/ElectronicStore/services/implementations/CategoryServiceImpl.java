@@ -28,6 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  public PageableResponse<CategoryDto> getAll(int pageNumber, int pageSize, String sortBy, String sortDir) {
+    Sort sort = Helper.getSortObject(sortDir, sortBy);
+    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+    Page<Category> page = categoryRepository.findAll(pageable);
+    return Helper.getPageableResponse(page, CategoryDto.class);
+  }
+
+  @Override
   public CategoryDto getById(String id) {
     Category category = categoryRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
@@ -35,11 +43,10 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public PageableResponse<CategoryDto> getAll(int pageNumber, int pageSize, String sortBy, String sortDir) {
-    Sort sort = Helper.getSortObject(sortDir, sortBy);
-    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-    Page<Category> page = categoryRepository.findAll(pageable);
-    return Helper.getPageableResponse(page, CategoryDto.class);
+  public CategoryDto getByTitle(String title) {
+    Category category = categoryRepository.findByTitle(title)
+        .orElseThrow(() -> new ResourceNotFoundException("Category not found with title: " + title));
+    return mapper.map(category, CategoryDto.class);
   }
 
   @Override

@@ -41,23 +41,6 @@ public class UserController {
         HttpStatus.CREATED);
   }
 
-  @GetMapping("/{userId}")
-  public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String userId) {
-    return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
-  }
-
-  @GetMapping("/email/{email}")
-  public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email") String email
-  ) {
-    return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
-  }
-
-  @GetMapping("/search/{keyword}")
-  public ResponseEntity<List<UserDto>> searchUsers(@PathVariable("keyword") String keyword) {
-    List<UserDto> users = userService.searchUsers(keyword);
-    return new ResponseEntity<>(users, HttpStatus.OK);
-  }
-
   @GetMapping
   public ResponseEntity<PageableResponse<UserDto>> getAllUsers(
       @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
@@ -70,15 +53,32 @@ public class UserController {
         HttpStatus.OK);
   }
 
+  @GetMapping("/{userId}")
+  public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
+    return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
+  }
+
+  @GetMapping("/email/{email}")
+  public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email
+  ) {
+    return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
+  }
+
+  @GetMapping("/search/{keyword}")
+  public ResponseEntity<List<UserDto>> searchUsers(@PathVariable String keyword) {
+    List<UserDto> users = userService.searchUsers(keyword);
+    return new ResponseEntity<>(users, HttpStatus.OK);
+  }
+
   @PutMapping("/{userId}")
-  public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String userId,
+  public ResponseEntity<UserDto> updateUser(@PathVariable String userId,
                                             @Valid @RequestBody UserDto userDto) {
     return new ResponseEntity<>(userService.updateUser(userId, userDto),
         HttpStatus.OK);
   }
 
   @DeleteMapping("/{userId}")
-  public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable("userId") String userId) {
+  public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable String userId) {
     userService.deleteUser(userId);
     ApiResponseMessage responseMessage = ApiResponseMessage
         .builder()
@@ -93,7 +93,7 @@ public class UserController {
   @PostMapping("/image/{userId}")
   public ResponseEntity<ImageResponse> uploadUserImage(
       @RequestParam("userImage") MultipartFile image,
-      @PathVariable("userId") String userId
+      @PathVariable String userId
   ) {
     String imageName = fileService.uploadImage(image, imageUploadPath);
     UserDto user = userService.getUserById(userId);
