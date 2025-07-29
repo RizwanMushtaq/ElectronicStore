@@ -59,11 +59,11 @@ public class CategoryController {
   @DeleteMapping("/{categoryId}")
   public ResponseEntity<ApiResponseMessage> deleteCategoryById(@PathVariable String categoryId) {
     categoryService.deleteById(categoryId);
-    ApiResponseMessage responseMessage = ApiResponseMessage.builder()
+    ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
         .message("Category deleted successfully")
         .success(true)
         .status(HttpStatus.OK)
         .build();
-    return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    return new ResponseEntity<>(apiResponseMessage, HttpStatus.OK);
   }
 }
