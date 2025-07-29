@@ -3,6 +3,7 @@ package com.rizwanmushtaq.ElectronicStore.helper;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,5 +25,10 @@ public class Helper {
     pageableResponse.setTotalPages(page.getTotalPages());
     pageableResponse.setLastPage(page.isLast());
     return pageableResponse;
+  }
+
+  public static Sort getSortObject(String sortDir, String sortBy) {
+    return sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() :
+        Sort.by(sortBy).ascending();
   }
 }
