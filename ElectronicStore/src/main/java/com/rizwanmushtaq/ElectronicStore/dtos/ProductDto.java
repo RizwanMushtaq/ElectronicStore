@@ -1,9 +1,5 @@
-package com.rizwanmushtaq.ElectronicStore.entities;
+package com.rizwanmushtaq.ElectronicStore.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.*;
 
 import java.util.Date;
@@ -12,15 +8,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
-@Entity
-@Table(name = "products")
-public class Product {
-  @Id
+@Builder
+public class ProductDto {
   private String id;
   private String title;
-  @Column(length = 1000)
   private String description;
   private int price;
   private int discountedPrice;
