@@ -8,5 +8,5 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, String> {
   List<Product> findByTitleContaining(String title);
 
-  List<Product> findByLiveTrue(Boolean live);
+  List<Product> findByLive(Boolean live);
 }

@@ -2,11 +2,9 @@ package com.rizwanmushtaq.ElectronicStore.services;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.ProductDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ProductService {
   ProductDto create(ProductDto Product);
 

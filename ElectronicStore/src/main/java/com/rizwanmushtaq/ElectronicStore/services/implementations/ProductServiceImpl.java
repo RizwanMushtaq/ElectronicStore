@@ -13,10 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ProductServiceImpl implements ProductService {
   @Autowired
   private ProductRepository productRepository;
@@ -57,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public List<ProductDto> getLiveProducts(Boolean live) {
-    List<Product> products = productRepository.findByLiveTrue(live);
+    List<Product> products = productRepository.findByLive(live);
     return products
         .stream()
         .map(product -> modelMapper.map(product, ProductDto.class))
