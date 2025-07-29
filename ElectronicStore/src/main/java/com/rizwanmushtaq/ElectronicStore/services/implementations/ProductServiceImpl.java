@@ -93,6 +93,7 @@ public class ProductServiceImpl implements ProductService {
     existingProduct.setAddedDate(productDto.getAddedDate());
     existingProduct.setLive(productDto.isLive());
     existingProduct.setStocked(productDto.isStocked());
+    existingProduct.setProductImageName(productDto.getProductImageName());
     Product updatedProduct = productRepository.save(existingProduct);
     return modelMapper.map(updatedProduct, ProductDto.class);
   }

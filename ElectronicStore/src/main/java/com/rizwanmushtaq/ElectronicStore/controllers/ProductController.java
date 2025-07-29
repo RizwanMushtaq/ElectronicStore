@@ -106,7 +106,8 @@ public class ProductController {
     logger.info("Image name: {}", imageName);
     product.setProductImageName(imageName);
     logger.info("Product: {}", product);
-    productService.updateById(productId, product);
+    ProductDto updatedProduct = productService.updateById(productId, product);
+    logger.info("updatedProduct: {}", updatedProduct);
     ImageResponse imageResponse = ImageResponse
         .builder()
         .imageName(imageName)
