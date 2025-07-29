@@ -1,14 +1,18 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
+import com.rizwanmushtaq.ElectronicStore.dtos.ImageResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
+import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +21,10 @@ import java.util.List;
 public class UserController {
   @Autowired
   private UserService userService;
+  @Autowired
+  private FileService fileService;
+  @Value("${user.profile.image.path}")
+  private String imageUploadPath;
 
   @PostMapping
   public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
@@ -71,4 +79,25 @@ public class UserController {
         .build();
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
+
+  // upload user image
+  @PostMapping("/image/{userId}")
+  public ResponseEntity<ImageResponse> uploadUserImage(
+      @RequestParam("userImage") MultipartFile image,
+      @PathVariable("userId") String userId
+  ) {
+    String imageName = fileService.uploadImage(image, imageUploadPath);
+    UserDto user = userService.getUserById(userId);
+    user.setImageName(imageName);
+    userService.updateUser(userId, user);
+    ImageResponse imageResponse = ImageResponse
+        .builder()
+        .imageName(imageName)
+        .message("Image uploaded successfully")
+        .success(true)
+        .status(HttpStatus.CREATED)
+        .build();
+    return new ResponseEntity<>(imageResponse, HttpStatus.CREATED);
+  }
+  // serve user image
 }
