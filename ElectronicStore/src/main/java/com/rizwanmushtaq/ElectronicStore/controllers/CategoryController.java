@@ -92,8 +92,8 @@ public class CategoryController {
       @RequestParam("categoryImage") MultipartFile image,
       @PathVariable String categoryId
   ) {
-    String imageName = fileService.uploadImage(image, imageUploadPath);
     CategoryDto category = categoryService.getById(categoryId);
+    String imageName = fileService.uploadImage(image, imageUploadPath);
     logger.info("Image name: {}", imageName);
     category.setCoverImage(imageName);
     logger.info("Category: {}", category);

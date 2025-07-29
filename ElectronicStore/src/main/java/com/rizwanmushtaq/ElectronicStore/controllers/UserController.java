@@ -94,8 +94,8 @@ public class UserController {
       @RequestParam("userImage") MultipartFile image,
       @PathVariable String userId
   ) {
-    String imageName = fileService.uploadImage(image, imageUploadPath);
     UserDto user = userService.getUserById(userId);
+    String imageName = fileService.uploadImage(image, imageUploadPath);
     logger.info("Image name: {}", imageName);
     user.setImageName(imageName);
     logger.info("User: {}", user);
