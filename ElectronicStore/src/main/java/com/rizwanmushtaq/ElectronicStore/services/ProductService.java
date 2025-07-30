@@ -19,4 +19,6 @@ public interface ProductService {
   ProductDto updateById(String id, ProductDto Product);
 
   void deleteById(String id);
+
+  ProductDto createProductWithCategory(String categoryId, ProductDto productDto);
 }

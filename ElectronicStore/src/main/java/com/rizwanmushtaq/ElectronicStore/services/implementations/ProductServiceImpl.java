@@ -2,9 +2,11 @@ package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.ProductDto;
+import com.rizwanmushtaq.ElectronicStore.entities.Category;
 import com.rizwanmushtaq.ElectronicStore.entities.Product;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.helper.Helper;
+import com.rizwanmushtaq.ElectronicStore.repositories.CategoryRepository;
 import com.rizwanmushtaq.ElectronicStore.repositories.ProductRepository;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
 import org.modelmapper.ModelMapper;
@@ -30,6 +32,8 @@ public class ProductServiceImpl implements ProductService {
   Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
   @Autowired
   private ProductRepository productRepository;
+  @Autowired
+  private CategoryRepository categoryRepository;
   @Autowired
   private ModelMapper modelMapper;
   @Value("${product.image.path}")
@@ -115,5 +119,22 @@ public class ProductServiceImpl implements ProductService {
       }
     }
     productRepository.delete(product);
+  }
+
+  @Override
+  public ProductDto createProductWithCategory(
+      String categoryId,
+      ProductDto productDto
+  ) {
+    Category category = categoryRepository.findById(categoryId).orElseThrow(
+        () -> new ResourceNotFoundException("Category with given id not found: " + categoryId)
+    );
+    Product product = modelMapper.map(productDto, Product.class);
+    String id = Helper.getUUID();
+    product.setId(id);
+    product.setAddedDate(Helper.getCurrentDate());
+    product.setCategory(category);
+    Product savedProduct = productRepository.save(product);
+    return modelMapper.map(savedProduct, ProductDto.class);
   }
 }

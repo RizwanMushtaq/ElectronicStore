@@ -1,12 +1,10 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
-import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
-import com.rizwanmushtaq.ElectronicStore.dtos.CategoryDto;
-import com.rizwanmushtaq.ElectronicStore.dtos.ImageResponse;
-import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
+import com.rizwanmushtaq.ElectronicStore.dtos.*;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
+import com.rizwanmushtaq.ElectronicStore.services.ProductService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -29,6 +27,8 @@ public class CategoryController {
   Logger logger = LoggerFactory.getLogger(CategoryController.class);
   @Autowired
   private CategoryService categoryService;
+  @Autowired
+  private ProductService productService;
   @Autowired
   private FileService fileService;
   @Value("${category.image.path}")
@@ -123,5 +123,15 @@ public class CategoryController {
     } else {
       throw new ResourceNotFoundException("Image not found for user: " + categoryId);
     }
+  }
+
+  @PostMapping("/{categoryId}/products")
+  public ResponseEntity<ProductDto> createProductWithCategory(
+      @PathVariable String categoryId,
+      @Valid @RequestBody ProductDto productDto
+  ) {
+    logger.info("Creating product with category ID: {} and product data: {}", categoryId, productDto);
+    ProductDto createdProduct = productService.createProductWithCategory(categoryId, productDto);
+    return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
   }
 }
