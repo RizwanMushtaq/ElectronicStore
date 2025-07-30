@@ -137,4 +137,34 @@ public class ProductServiceImpl implements ProductService {
     Product savedProduct = productRepository.save(product);
     return modelMapper.map(savedProduct, ProductDto.class);
   }
+
+  @Override
+  public ProductDto updateProductWithCategory(String productId, String categoryId) {
+    Category category = categoryRepository.findById(categoryId).orElseThrow(
+        () -> new ResourceNotFoundException("Category with given id not found: " + categoryId)
+    );
+    Product product = productRepository.findById(productId).orElseThrow(
+        () -> new ResourceNotFoundException("Product with given id not found: " + productId)
+    );
+    product.setCategory(category);
+    Product updatedProduct = productRepository.save(product);
+    return modelMapper.map(updatedProduct, ProductDto.class);
+  }
+
+  @Override
+  public PageableResponse<ProductDto> getProductsByCategory(
+      String categoryId,
+      int pageNumber,
+      int pageSize,
+      String sortBy,
+      String sortDir
+  ) {
+    Category category = categoryRepository.findById(categoryId).orElseThrow(
+        () -> new ResourceNotFoundException("Category with given id not found: " + categoryId)
+    );
+    Sort sort = Helper.getSortObject(sortDir, sortBy);
+    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+    Page<Product> page = productRepository.findByCategory(category, pageable);
+    return Helper.getPageableResponse(page, ProductDto.class);
+  }
 }

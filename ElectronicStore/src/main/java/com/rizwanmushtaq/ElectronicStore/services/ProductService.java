@@ -21,4 +21,14 @@ public interface ProductService {
   void deleteById(String id);
 
   ProductDto createProductWithCategory(String categoryId, ProductDto productDto);
+
+  ProductDto updateProductWithCategory(String productId, String categoryId);
+
+  PageableResponse<ProductDto> getProductsByCategory(
+      String categoryId,
+      int pageNumber,
+      int pageSize,
+      String sortBy,
+      String sortDir
+  );
 }
