@@ -74,7 +74,8 @@ public class CartServiceImpl implements CartService {
       }
     }).collect(Collectors.toList());
     if (updatedExistingItem.get()) {
-      cart.setCartItems(updatedCartItems);
+      cart.getCartItems().clear();
+      cart.getCartItems().addAll(updatedCartItems);
       logger.info("Cart item updated with updatedCartItems: {}", updatedCartItems);
     } else {
       CartItem cartItem = CartItem.builder()
