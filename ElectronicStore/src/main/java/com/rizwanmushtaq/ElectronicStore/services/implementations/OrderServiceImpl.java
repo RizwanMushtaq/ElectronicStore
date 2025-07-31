@@ -12,6 +12,10 @@ import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import com.rizwanmushtaq.ElectronicStore.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,15 +74,26 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public void removeOrder(String orderId) {
+    Order order = orderRepository.findById(orderId)
+        .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
+    orderRepository.delete(order);
   }
 
   @Override
   public List<OrderDto> getOrdersOfUser(String userId) {
-    return List.of();
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+    List<Order> orders = orderRepository.findByUser(user);
+    return orders.stream()
+        .map(order -> modelMapper.map(order, OrderDto.class))
+        .collect(Collectors.toList());
   }
 
   @Override
   public PageableResponse<OrderDto> getOrders(int pageNumber, int pageSize, String sortBy, String sortDir) {
-    return null;
+    Sort sort = Helper.getSortObject(sortBy, sortDir);
+    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+    Page<Order> orderPage = orderRepository.findAll(pageable);
+    return Helper.getPageableResponse(orderPage, OrderDto.class);
   }
 }
