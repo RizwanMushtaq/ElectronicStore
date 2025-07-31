@@ -30,7 +30,7 @@ public class Order {
   @ManyToOne
   @ToString.Exclude
   private User user;
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude
   private List<OrderItem> orderItems = new ArrayList<>();
 }

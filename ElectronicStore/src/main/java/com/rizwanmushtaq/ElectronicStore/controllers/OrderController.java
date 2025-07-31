@@ -5,6 +5,8 @@ import com.rizwanmushtaq.ElectronicStore.dtos.CreateOrderRequest;
 import com.rizwanmushtaq.ElectronicStore.dtos.OrderDto;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.services.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+  Logger logger = LoggerFactory.getLogger(OrderController.class);
   @Autowired
   private OrderService orderService;
 
@@ -59,9 +62,10 @@ public class OrderController {
   public ResponseEntity<PageableResponse<OrderDto>> getOrders(
       @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
       @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-      @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
+      @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
       @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
   ) {
+    logger.info("Fetching orders with pageNumber: {}, pageSize: {}, sortBy: {}, sortDir: {}", pageNumber, pageSize, sortBy, sortDir);
     PageableResponse<OrderDto> pageableResponse = orderService.getOrders(pageNumber, pageSize, sortBy, sortDir);
     return new ResponseEntity<>(pageableResponse, HttpStatus.OK);
   }

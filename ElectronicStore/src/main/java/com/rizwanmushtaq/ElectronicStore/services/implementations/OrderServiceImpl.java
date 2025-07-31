@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public PageableResponse<OrderDto> getOrders(int pageNumber, int pageSize, String sortBy, String sortDir) {
-    Sort sort = Helper.getSortObject(sortBy, sortDir);
+    Sort sort = Helper.getSortObject(sortDir, sortBy);
     Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
     Page<Order> orderPage = orderRepository.findAll(pageable);
     return Helper.getPageableResponse(orderPage, OrderDto.class);
