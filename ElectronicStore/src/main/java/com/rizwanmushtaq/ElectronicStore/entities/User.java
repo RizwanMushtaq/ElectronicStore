@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,5 +32,9 @@ public class User {
   private String imageName;
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
   @JsonIgnore
+  @ToString.Exclude
   private Cart cart;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<Order> orders = new ArrayList<>();
 }
