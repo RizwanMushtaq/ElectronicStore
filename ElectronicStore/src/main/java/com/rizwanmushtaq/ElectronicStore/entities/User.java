@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,6 @@ public class User {
   private String about;
   private String imageName;
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  @JsonIgnore
   private Cart cart;
 }

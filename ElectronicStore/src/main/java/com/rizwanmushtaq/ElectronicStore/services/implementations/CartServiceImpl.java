@@ -18,11 +18,13 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+@Service
 public class CartServiceImpl implements CartService {
   Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
   @Autowired
@@ -38,7 +40,6 @@ public class CartServiceImpl implements CartService {
 
   @Override
   public CartDto addItemToCart(String userId, AddItemToCartRequest addItemToCartRequest) throws BadRequestException {
-    Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
     int quantity = addItemToCartRequest.getQuantity();
     String productId = addItemToCartRequest.getProductId();
     if (quantity <= 0) {
@@ -51,9 +52,7 @@ public class CartServiceImpl implements CartService {
         () -> new RuntimeException("User not found with id: " + userId)
     );
     Cart cart = null;
-    cart = cartRepository.findByUser(user).orElseThrow(
-        () -> new ResourceNotFoundException("Cart not found for user: " + userId)
-    );
+    cart = cartRepository.findByUser(user).orElse(null);
     if (cart == null) {
       logger.info("Cart not found for user: " + userId + ", creating a new cart.");
       cart = new Cart();
@@ -68,7 +67,7 @@ public class CartServiceImpl implements CartService {
         item.setQuantity(item.getQuantity() + quantity);
         item.setTotalPrice(item.getTotalPrice() + (quantity * product.getPrice()));
         updatedExistingItem.set(true);
-        logger.info("Updated existing cart item for product: " + productId);
+        logger.info("Updated existing cart item for product: {}", item);
         return item;
       } else {
         return item;
@@ -76,6 +75,7 @@ public class CartServiceImpl implements CartService {
     }).collect(Collectors.toList());
     if (updatedExistingItem.get()) {
       cart.setCartItems(updatedCartItems);
+      logger.info("Cart item updated with updatedCartItems: {}", updatedCartItems);
     } else {
       CartItem cartItem = CartItem.builder()
           .quantity(quantity)
@@ -85,7 +85,6 @@ public class CartServiceImpl implements CartService {
           .build();
       cart.getCartItems().add(cartItem);
     }
-    cart.setUser(user);
     Cart updatedCart = cartRepository.save(cart);
     return modelMapper.map(updatedCart, CartDto.class);
   }
