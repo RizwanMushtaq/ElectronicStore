@@ -19,6 +19,6 @@ public class CartItem {
   private Product product;
   private int quantity;
   private int totalPrice;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   private Cart cart;
 }

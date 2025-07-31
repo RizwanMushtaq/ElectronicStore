@@ -23,6 +23,6 @@ public class Category {
   private String description;
   @Column(nullable = false)
   private String coverImage;
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
   private List<Product> products = new ArrayList<>();
 }

@@ -26,7 +26,7 @@ public class Product {
   private boolean live;
   private boolean stocked;
   private String productImageName;
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;
 }
