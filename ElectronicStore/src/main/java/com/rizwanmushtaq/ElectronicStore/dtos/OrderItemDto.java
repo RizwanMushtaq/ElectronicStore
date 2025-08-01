@@ -1,6 +1,5 @@
 package com.rizwanmushtaq.ElectronicStore.dtos;
 
-import com.rizwanmushtaq.ElectronicStore.entities.Order;
 import com.rizwanmushtaq.ElectronicStore.entities.Product;
 import lombok.*;
 
@@ -15,5 +14,4 @@ public class OrderItemDto {
   private int quantity;
   private int totalPrice;
   private Product product;
-  private Order order;
 }

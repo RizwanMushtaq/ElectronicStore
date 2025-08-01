@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,9 +19,8 @@ public class OrderItem {
   private int quantity;
   private int totalPrice;
   @ManyToOne
-  @ToString.Exclude
   private Product product;
   @ManyToOne
-  @ToString.Exclude
+  @JsonIgnore
   private Order order;
 }

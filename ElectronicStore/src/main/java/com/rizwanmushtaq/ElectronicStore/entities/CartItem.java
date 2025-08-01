@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +21,6 @@ public class CartItem {
   private int quantity;
   private int totalPrice;
   @ManyToOne
+  @JsonIgnore
   private Cart cart;
 }

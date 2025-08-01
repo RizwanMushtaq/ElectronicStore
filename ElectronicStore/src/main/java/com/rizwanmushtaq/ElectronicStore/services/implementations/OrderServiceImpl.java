@@ -47,10 +47,6 @@ public class OrderServiceImpl implements OrderService {
         .billingName(orderDto.getBillingName())
         .billingAddress(orderDto.getBillingAddress())
         .billingPhone(orderDto.getBillingPhone())
-        .orderStatus(orderDto.getOrderStatus())
-        .orderedDate(orderDto.getOrderedDate())
-        .deliveredDate(null)
-        .paymentStatus(orderDto.getPaymentStatus())
         .id(Helper.getUUID())
         .user(user)
         .build();
@@ -61,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
           .builder()
           .quantity(cartItem.getQuantity())
           .totalPrice(cartItem.getTotalPrice())
+          .product(cartItem.getProduct())
           .order(order)
           .build();
     }).collect(Collectors.toList());

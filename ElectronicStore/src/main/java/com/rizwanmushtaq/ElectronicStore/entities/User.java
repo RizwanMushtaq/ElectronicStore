@@ -35,6 +35,7 @@ public class User {
   @ToString.Exclude
   private Cart cart;
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @JsonIgnore
   @ToString.Exclude
   private List<Order> orders = new ArrayList<>();
 }

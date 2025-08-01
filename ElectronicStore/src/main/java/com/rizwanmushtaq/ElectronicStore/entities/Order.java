@@ -28,9 +28,8 @@ public class Order {
   private Date orderedDate;
   private Date deliveredDate;
   @ManyToOne
-  @ToString.Exclude
   private User user;
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch =
+      FetchType.EAGER, orphanRemoval = true)
   private List<OrderItem> orderItems = new ArrayList<>();
 }
