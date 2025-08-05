@@ -2,9 +2,11 @@ package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
+import com.rizwanmushtaq.ElectronicStore.entities.Role;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.helper.Helper;
+import com.rizwanmushtaq.ElectronicStore.repositories.RoleRepository;
 import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -37,6 +39,8 @@ public class UserServiceImpl implements UserService {
   private String imagePath;
   @Autowired
   private PasswordEncoder passwordEncoder;
+  @Autowired
+  private RoleRepository roleRepository;
 
   @Override
   public UserDto createUser(UserDto userDto) {
@@ -44,6 +48,9 @@ public class UserServiceImpl implements UserService {
     userDto.setId(userId);
     userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
     User userEntity = modelMapper.map(userDto, User.class);
+    Role roleNormal =
+        roleRepository.findByName("ROLE_NORMAL").orElseThrow(() -> new ResourceNotFoundException("Role not found with name: ROLE_NORMAL"));
+    userEntity.setRoles(List.of(roleNormal));
     User savedUser = userRepository.save(userEntity);
     return modelMapper.map(savedUser, UserDto.class);
   }
