@@ -1,13 +1,16 @@
 package com.rizwanmushtaq.ElectronicStore;
 
 import com.rizwanmushtaq.ElectronicStore.entities.Role;
+import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.repositories.RoleRepository;
 import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -16,6 +19,8 @@ public class ElectronicStoreApplication implements CommandLineRunner {
   private RoleRepository roleRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public static void main(String[] args) {
     SpringApplication.run(ElectronicStoreApplication.class, args);
@@ -40,6 +45,21 @@ public class ElectronicStoreApplication implements CommandLineRunner {
           .name("ROLE_NORMAL")
           .build();
       normalRole = roleRepository.save(newRoleNormal);
+    }
+    User adminUser = userRepository.findByUsername("admin").orElse(null);
+    User johnUser = userRepository.findByUsername("john").orElse(null);
+    if (adminUser == null) {
+      User newAdmin = User.builder()
+          .id(UUID.randomUUID().toString())
+          .username("admin")
+          .name("rizwan")
+          .password(passwordEncoder.encode("admin"))
+          .email("rizwan@gmail.de")
+          .gender("male")
+          .about("I am admin of application")
+          .roles(List.of(adminRole))
+          .build();
+      adminUser = userRepository.save(newAdmin);
     }
   }
 }
