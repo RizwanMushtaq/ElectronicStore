@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +29,7 @@ public class UserDto {
   private String gender;
   @NotBlank(message = "About is required")
   private String about;
+  private List<RoleDto> roles;
   @ImageNameValid
   private String imageName;
 }
