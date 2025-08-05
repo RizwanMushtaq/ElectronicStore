@@ -8,6 +8,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class CartController {
   @Autowired
   private CartService cartService;
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @PostMapping("/{userId}")
   public ResponseEntity<CartDto> addItemToCart(
       @PathVariable String userId,
@@ -26,6 +28,7 @@ public class CartController {
     return new ResponseEntity<>(cartDto, HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @DeleteMapping("/{userId}/items/{itemId}")
   public ResponseEntity<ApiResponseMessage> removeItemFromCart(
       @PathVariable String itemId,
@@ -41,6 +44,7 @@ public class CartController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @DeleteMapping("/{userId}")
   public ResponseEntity<ApiResponseMessage> clearCart(
       @PathVariable String userId
@@ -55,6 +59,7 @@ public class CartController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @GetMapping("/{userId}")
   public ResponseEntity<CartDto> getCart(
       @PathVariable String userId

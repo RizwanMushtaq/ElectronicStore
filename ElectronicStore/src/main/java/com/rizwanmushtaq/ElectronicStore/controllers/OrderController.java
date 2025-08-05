@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class OrderController {
   @Autowired
   private OrderService orderService;
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @PostMapping
   public ResponseEntity<OrderDto> createOrder(
       @RequestBody CreateOrderRequest createOrderRequest
@@ -37,6 +39,7 @@ public class OrderController {
     return new ResponseEntity<>(createdOrderDto, HttpStatus.CREATED);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{orderId}")
   public ResponseEntity<ApiResponseMessage> removeOrder(
       @PathVariable String orderId
@@ -51,6 +54,7 @@ public class OrderController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
   @GetMapping("/{userId}")
   public ResponseEntity<List<OrderDto>> getOrdersOfUser(
       @PathVariable String userId
@@ -58,6 +62,7 @@ public class OrderController {
     return new ResponseEntity<>(orderService.getOrdersOfUser(userId), HttpStatus.OK);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping
   public ResponseEntity<PageableResponse<OrderDto>> getOrders(
       @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
