@@ -44,10 +44,11 @@ public class ProductController {
 
   @GetMapping
   public ResponseEntity<PageableResponse<ProductDto>> getAll(
-      @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-      @RequestParam(value = "pageSize", defaultValue = "10",
-          required = false) int pageSize,
-      @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
+      @RequestParam(value = "pageNumber", defaultValue = "1", required =
+          false) int pageNumber,
+      @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+      @RequestParam(value = "sortBy", defaultValue = "title",
+          required = false) String sortBy,
       @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
   ) {
     return new ResponseEntity<>(productService.getAll(
