@@ -37,6 +37,7 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+    logger.info("called create User: {}", userDto);
     return new ResponseEntity<>(userService.createUser(userDto),
         HttpStatus.CREATED);
   }
@@ -50,6 +51,7 @@ public class UserController {
       @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
       @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
   ) {
+    logger.info("called getAllUsers");
     return new ResponseEntity<>(userService.getAllUsers(pageNumber, pageSize, sortBy, sortDir),
         HttpStatus.OK);
   }

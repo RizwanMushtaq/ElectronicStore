@@ -59,7 +59,20 @@ public class ElectronicStoreApplication implements CommandLineRunner {
           .about("I am admin of application")
           .roles(List.of(adminRole))
           .build();
-      adminUser = userRepository.save(newAdmin);
+      userRepository.save(newAdmin);
+    }
+    if (johnUser == null) {
+      User newUser = User.builder()
+          .id(UUID.randomUUID().toString())
+          .username("john")
+          .name("john")
+          .password(passwordEncoder.encode("john"))
+          .email("john@gmail.de")
+          .gender("male")
+          .about("I am john")
+          .roles(List.of(normalRole))
+          .build();
+      userRepository.save(newUser);
     }
   }
 }

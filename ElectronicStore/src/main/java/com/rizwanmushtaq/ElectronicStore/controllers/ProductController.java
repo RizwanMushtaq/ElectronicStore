@@ -51,6 +51,7 @@ public class ProductController {
           required = false) String sortBy,
       @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
   ) {
+    logger.info("called getAll Products");
     return new ResponseEntity<>(productService.getAll(
         pageNumber,
         pageSize,
