@@ -45,6 +45,7 @@ public class User implements UserDetails {
   @ToString.Exclude
   private List<Order> orders = new ArrayList<>();
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @ToString.Exclude
   private List<Role> roles = new ArrayList<>();
 
   @Override
