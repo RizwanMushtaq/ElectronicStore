@@ -3,6 +3,7 @@ package com.rizwanmushtaq.ElectronicStore.exceptions;
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,5 +55,17 @@ public class GlobalExceptionHandler {
         .success(false)
         .build();
     return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+  }
+
+  // handle DataIntegrityViolationException
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<Map<String, Object>> handleDuplicateKey(DataIntegrityViolationException exception) {
+    logger.info("Bad Request with Data Integrity Violation: {}", exception.getMessage());
+    ApiResponseMessage response = ApiResponseMessage.builder()
+        .message(exception.getMessage())
+        .status(HttpStatus.CONFLICT)
+        .success(false)
+        .build();
+    return new ResponseEntity(response, HttpStatus.CONFLICT);
   }
 }
