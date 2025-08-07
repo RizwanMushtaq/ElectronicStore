@@ -32,6 +32,7 @@ public class SecurityConfig {
             .requestMatchers("/api/products/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
             .requestMatchers("/api/categories/**").hasRole("ADMIN")
+            .anyRequest().permitAll()
     );
     // Configure Type of Security
     httpSecurity.httpBasic(Customizer.withDefaults());
