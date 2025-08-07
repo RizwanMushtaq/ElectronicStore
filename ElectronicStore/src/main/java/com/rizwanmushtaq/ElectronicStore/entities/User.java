@@ -44,7 +44,7 @@ public class User implements UserDetails {
   @JsonIgnore
   @ToString.Exclude
   private List<Order> orders = new ArrayList<>();
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @ToString.Exclude
   private List<Role> roles = new ArrayList<>();
 
