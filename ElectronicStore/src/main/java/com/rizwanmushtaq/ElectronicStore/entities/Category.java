@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,5 +25,6 @@ public class Category {
   @Column(nullable = false)
   private String coverImage;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+  @JsonIgnore
   private List<Product> products = new ArrayList<>();
 }
