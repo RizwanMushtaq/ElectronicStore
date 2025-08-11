@@ -23,5 +23,9 @@ class ElectronicStoreApplicationTests {
     User username = userRepository.findByUsername("admin").get();
     String token = jwtHelper.generateToken(username);
     System.out.println("tesing Token: " + token);
+    System.out.println("Getting username from Token: ");
+    System.out.println("username: " + jwtHelper.getUsernameFromToken(token));
+    System.out.println("isTokenExpired: " + jwtHelper.isTokenExpired(token));
+    System.out.println("getExpirationDateFromToken: " + jwtHelper.getExpirationDateFromToken(token));
   }
 }
