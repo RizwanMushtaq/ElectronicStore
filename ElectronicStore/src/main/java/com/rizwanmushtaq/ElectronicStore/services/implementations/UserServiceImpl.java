@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.Role;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
     User userEntity = modelMapper.map(userDto, User.class);
     Role roleNormal =
-        roleRepository.findByName("ROLE_NORMAL").orElseThrow(() -> new ResourceNotFoundException("Role not found with name: ROLE_NORMAL"));
+        roleRepository.findByName("ROLE_" + AppConstants.ROLE_NORMAL).orElseThrow(() -> new ResourceNotFoundException("Role not found with name: ROLE_NORMAL"));
     userEntity.setRoles(List.of(roleNormal));
     User savedUser = userRepository.save(userEntity);
     return modelMapper.map(savedUser, UserDto.class);

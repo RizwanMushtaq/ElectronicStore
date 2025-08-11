@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.dtos.AddItemToCartRequest;
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.CartDto;
@@ -17,7 +18,7 @@ public class CartController {
   @Autowired
   private CartService cartService;
 
-  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('" + AppConstants.ROLE_NORMAL + "', '" + AppConstants.ROLE_ADMIN + "')")
   @PostMapping("/{userId}")
   public ResponseEntity<CartDto> addItemToCart(
       @PathVariable String userId,
@@ -28,7 +29,7 @@ public class CartController {
     return new ResponseEntity<>(cartDto, HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('" + AppConstants.ROLE_NORMAL + "', '" + AppConstants.ROLE_ADMIN + "')")
   @DeleteMapping("/{userId}/items/{itemId}")
   public ResponseEntity<ApiResponseMessage> removeItemFromCart(
       @PathVariable String itemId,
@@ -44,7 +45,7 @@ public class CartController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('" + AppConstants.ROLE_NORMAL + "', '" + AppConstants.ROLE_ADMIN + "')")
   @DeleteMapping("/{userId}")
   public ResponseEntity<ApiResponseMessage> clearCart(
       @PathVariable String userId
@@ -59,7 +60,7 @@ public class CartController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
-  @PreAuthorize("hasAnyRole('NORMAL', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('" + AppConstants.ROLE_NORMAL + "', '" + AppConstants.ROLE_ADMIN + "')")
   @GetMapping("/{userId}")
   public ResponseEntity<CartDto> getCart(
       @PathVariable String userId

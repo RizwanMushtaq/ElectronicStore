@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.entities.Role;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.repositories.RoleRepository;
@@ -34,7 +35,7 @@ public class ElectronicStoreApplication implements CommandLineRunner {
       Role newRoleAdmin = Role
           .builder()
           .id(UUID.randomUUID().toString())
-          .name("ROLE_ADMIN")
+          .name("ROLE_" + AppConstants.ROLE_ADMIN)
           .build();
       adminRole = roleRepository.save(newRoleAdmin);
     }
@@ -42,7 +43,7 @@ public class ElectronicStoreApplication implements CommandLineRunner {
       Role newRoleNormal = Role
           .builder()
           .id(UUID.randomUUID().toString())
-          .name("ROLE_NORMAL")
+          .name("ROLE_" + AppConstants.ROLE_NORMAL)
           .build();
       normalRole = roleRepository.save(newRoleNormal);
     }

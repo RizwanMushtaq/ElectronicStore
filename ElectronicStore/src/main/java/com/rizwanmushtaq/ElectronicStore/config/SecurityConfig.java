@@ -36,13 +36,13 @@ public class SecurityConfig {
     httpSecurity.authorizeHttpRequests(request ->
         request
             .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
-            .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("ADMIN", "NORMAL")
+            .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole(AppConstants.ROLE_ADMIN)
+            .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole(AppConstants.ROLE_ADMIN, AppConstants.ROLE_NORMAL)
             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-            .requestMatchers("/api/products/**").hasRole("ADMIN")
+            .requestMatchers("/api/products/**").hasRole(AppConstants.ROLE_ADMIN)
             .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
-            .requestMatchers("/api/categories/**").hasRole("ADMIN")
+            .requestMatchers("/api/categories/**").hasRole(AppConstants.ROLE_ADMIN)
             .requestMatchers(HttpMethod.POST, "/api/auth/generate-token").permitAll()
             .requestMatchers("/api/auth/**").authenticated()
             .anyRequest().permitAll()
