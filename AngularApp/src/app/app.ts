@@ -15,7 +15,7 @@ export class App {
 
   public loadProducts() {
     console.log('loading products');
-    this.http.get<any>('localhost:8080/api/products').subscribe({
+    this.http.get<any>('http://localhost:8080/api/products').subscribe({
       next: (data) => {
         console.log(data);
       },
