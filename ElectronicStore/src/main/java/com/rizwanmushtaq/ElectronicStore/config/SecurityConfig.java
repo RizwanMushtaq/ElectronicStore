@@ -2,6 +2,7 @@ package com.rizwanmushtaq.ElectronicStore.config;
 
 import com.rizwanmushtaq.ElectronicStore.security.JwtAuthenticationEntryPoint;
 import com.rizwanmushtaq.ElectronicStore.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity(debug = false)
@@ -28,9 +33,21 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    // diable CORS as of now
-    httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable());
-    // disable CSRF as of now
+    httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(
+        new CorsConfigurationSource() {
+          @Override
+          public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
+            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
+            corsConfiguration.setAllowedMethods(List.of("*"));
+            corsConfiguration.setAllowCredentials(true);
+            corsConfiguration.setAllowedHeaders(List.of("*"));
+            corsConfiguration.setMaxAge(3000L);
+            return corsConfiguration;
+          }
+        }
+    ));
+    // disable CSRF as we are using JWT based authentication
     httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
     // Configure Urls
     httpSecurity.authorizeHttpRequests(request ->
@@ -55,7 +72,6 @@ public class SecurityConfig {
     return httpSecurity.build();
   }
 
-  // password encoder
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
