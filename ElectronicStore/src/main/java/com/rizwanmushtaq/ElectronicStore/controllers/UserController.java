@@ -7,6 +7,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -59,6 +60,10 @@ public class UserController {
   }
 
   @GetMapping("/{userId}")
+  @Operation(
+      summary = "Get a user by ID",
+      description = "Retrieve detailed information about a user by their unique ID."
+  )
   public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
     return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
   }
