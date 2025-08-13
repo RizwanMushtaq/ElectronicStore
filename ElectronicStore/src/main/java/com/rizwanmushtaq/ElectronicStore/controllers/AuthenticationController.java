@@ -2,9 +2,11 @@ package com.rizwanmushtaq.ElectronicStore.controllers;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.JwtRequest;
 import com.rizwanmushtaq.ElectronicStore.dtos.JwtResponse;
+import com.rizwanmushtaq.ElectronicStore.dtos.RefreshTokenDto;
 import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.security.JwtHelper;
+import com.rizwanmushtaq.ElectronicStore.services.RefreshTokenService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ public class AuthenticationController {
   private UserDetailsService userDetailsService;
   @Autowired
   private ModelMapper modelMapper;
+  @Autowired
+  private RefreshTokenService refreshTokenService;
 
   @PostMapping("/generate-token")
   public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
@@ -40,9 +44,12 @@ public class AuthenticationController {
     this.doAuthenticate(request.getUsername(), request.getPassword());
     User user = (User) userDetailsService.loadUserByUsername(request.getUsername());
     String token = jwtHelper.generateToken(user);
+    RefreshTokenDto refreshTokenDto =
+        refreshTokenService.createRefreshToken(user.getUsername());
     JwtResponse jwtResponse = JwtResponse
         .builder()
         .token(token)
+        .refreshToken(refreshTokenDto.getToken())
         .user(modelMapper.map(user, UserDto.class))
         .build();
     return ResponseEntity.ok(jwtResponse);
