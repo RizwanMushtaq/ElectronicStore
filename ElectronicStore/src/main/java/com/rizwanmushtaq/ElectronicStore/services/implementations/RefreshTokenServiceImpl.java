@@ -1,6 +1,7 @@
 package com.rizwanmushtaq.ElectronicStore.services.implementations;
 
 import com.rizwanmushtaq.ElectronicStore.dtos.RefreshTokenDto;
+import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
 import com.rizwanmushtaq.ElectronicStore.entities.RefreshToken;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
@@ -64,5 +65,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
       throw new RuntimeException("Refresh Token Expired !!");
     }
     return refreshTokenDto;
+  }
+
+  @Override
+  public UserDto getUser(RefreshTokenDto refreshTokenDto) {
+    RefreshToken refreshToken =
+        refreshTokenRepository.findByToken(refreshTokenDto.getToken()).orElseThrow(
+            () -> new ResourceNotFoundException("refresh token not found with" +
+                " token: " + refreshTokenDto.getToken())
+        );
+    return modelMapper.map(refreshToken.getUser(), UserDto.class);
   }
 }

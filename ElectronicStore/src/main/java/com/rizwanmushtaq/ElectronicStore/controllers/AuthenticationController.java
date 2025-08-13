@@ -1,9 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
-import com.rizwanmushtaq.ElectronicStore.dtos.JwtRequest;
-import com.rizwanmushtaq.ElectronicStore.dtos.JwtResponse;
-import com.rizwanmushtaq.ElectronicStore.dtos.RefreshTokenDto;
-import com.rizwanmushtaq.ElectronicStore.dtos.UserDto;
+import com.rizwanmushtaq.ElectronicStore.dtos.*;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.security.JwtHelper;
 import com.rizwanmushtaq.ElectronicStore.services.RefreshTokenService;
@@ -37,6 +34,24 @@ public class AuthenticationController {
   private ModelMapper modelMapper;
   @Autowired
   private RefreshTokenService refreshTokenService;
+
+  @PostMapping("/regenerate-token")
+  public ResponseEntity<JwtResponse> regenerateToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    RefreshTokenDto refreshTokenDto =
+        refreshTokenService.findByToken(refreshTokenRequest.getRefreshToken());
+    RefreshTokenDto verifiedRefreshToken =
+        refreshTokenService.verifyRefreshToken(refreshTokenDto);
+    UserDto user = refreshTokenService.getUser(verifiedRefreshToken);
+    String jwtToken = jwtHelper.generateToken(modelMapper.map(user,
+        User.class));
+    JwtResponse jwtResponse = JwtResponse
+        .builder()
+        .token(jwtToken)
+        .refreshToken(verifiedRefreshToken.getToken())
+        .user(user)
+        .build();
+    return ResponseEntity.ok(jwtResponse);
+  }
 
   @PostMapping("/generate-token")
   public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
