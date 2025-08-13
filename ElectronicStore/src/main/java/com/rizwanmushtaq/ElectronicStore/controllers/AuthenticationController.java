@@ -55,7 +55,7 @@ public class AuthenticationController {
     return ResponseEntity.ok(jwtResponse);
   }
 
-  @PostMapping("/generate-token")
+  @PostMapping("/login")
   public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
     logger.info("Username {}, Password {}", request.getUsername(), request.getPassword());
     this.doAuthenticate(request.getUsername(), request.getPassword());

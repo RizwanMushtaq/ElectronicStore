@@ -7,6 +7,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.ProductDto;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -37,6 +38,7 @@ public class ProductController {
   @Value("${product.image.path}")
   private String imageUploadPath;
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PostMapping
   public ResponseEntity<ProductDto> create(@Valid @RequestBody ProductDto productDto) {
     logger.info("Creating new product with: {}", productDto);
@@ -79,6 +81,7 @@ public class ProductController {
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PutMapping("/{productId}")
   public ResponseEntity<ProductDto> updateById(@PathVariable String productId,
                                                @Valid @RequestBody ProductDto productDto) {
@@ -87,6 +90,7 @@ public class ProductController {
     return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @DeleteMapping("/{productId}")
   public ResponseEntity<ApiResponseMessage> deleteById(@PathVariable String productId) {
     logger.info("Deleting product with ID: {}", productId);
@@ -100,6 +104,7 @@ public class ProductController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PostMapping("/image/{productId}")
   public ResponseEntity<ImageResponse> uploadImage(
       @RequestParam("productImage") MultipartFile image,

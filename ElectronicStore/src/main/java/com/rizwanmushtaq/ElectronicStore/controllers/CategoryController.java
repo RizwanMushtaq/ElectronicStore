@@ -5,6 +5,7 @@ import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -36,6 +37,7 @@ public class CategoryController {
   @Value("${category.image.path}")
   private String imageUploadPath;
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PostMapping
   public ResponseEntity<CategoryDto> create(@Valid @RequestBody CategoryDto categoryDto) {
     logger.info("Creating new category with: {}", categoryDto);
@@ -69,6 +71,7 @@ public class CategoryController {
     return new ResponseEntity<>(categoryService.getByTitle(categoryTile), HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PutMapping("/{categoryId}")
   public ResponseEntity<CategoryDto> updateCategoryById(
       @PathVariable String categoryId,
@@ -78,6 +81,7 @@ public class CategoryController {
     return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @DeleteMapping("/{categoryId}")
   public ResponseEntity<ApiResponseMessage> deleteCategoryById(@PathVariable String categoryId) {
     categoryService.deleteById(categoryId);
@@ -89,6 +93,7 @@ public class CategoryController {
     return new ResponseEntity<>(apiResponseMessage, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PostMapping("/image/{categoryId}")
   public ResponseEntity<ImageResponse> uploadImage(
       @RequestParam("categoryImage") MultipartFile image,
@@ -127,6 +132,7 @@ public class CategoryController {
     }
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PostMapping("/{categoryId}/products")
   public ResponseEntity<ProductDto> createProductWithCategory(
       @PathVariable String categoryId,
@@ -137,6 +143,7 @@ public class CategoryController {
     return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PutMapping("/{categoryId}/products/{productId}")
   public ResponseEntity<ProductDto> updateProductWithCategory(
       @PathVariable String categoryId,

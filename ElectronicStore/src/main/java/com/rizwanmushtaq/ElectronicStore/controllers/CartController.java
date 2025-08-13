@@ -5,6 +5,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.AddItemToCartRequest;
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.CartDto;
 import com.rizwanmushtaq.ElectronicStore.services.CartService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/carts")
 @Tag(name = "Cart Management", description = "Operations related to managing user carts in the E-Store")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CartController {
   @Autowired
   private CartService cartService;

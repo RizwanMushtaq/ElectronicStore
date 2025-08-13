@@ -8,6 +8,7 @@ import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -80,6 +81,7 @@ public class UserController {
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @PutMapping("/{userId}")
   public ResponseEntity<UserDto> updateUser(@PathVariable String userId,
                                             @Valid @RequestBody UserDto userDto) {
@@ -87,6 +89,7 @@ public class UserController {
         HttpStatus.OK);
   }
 
+  @SecurityRequirement(name = "Bearer Authentication")
   @DeleteMapping("/{userId}")
   public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable String userId) {
     logger.info("called deleteUser");

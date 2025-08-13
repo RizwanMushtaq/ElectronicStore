@@ -60,7 +60,7 @@ public class SecurityConfig {
             .requestMatchers("/api/products/**").hasRole(AppConstants.ROLE_ADMIN)
             .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
             .requestMatchers("/api/categories/**").hasRole(AppConstants.ROLE_ADMIN)
-            .requestMatchers(HttpMethod.POST, "/api/auth/generate-token",
+            .requestMatchers(HttpMethod.POST, "/api/auth/login",
                 "/api/auth/regenerate-token").permitAll()
             .requestMatchers("/api/auth/**").authenticated()
             .anyRequest().permitAll()
