@@ -13,7 +13,7 @@ public class OpenApiConfig {
     return new OpenAPI()
         .info(new Info()
             .title("Electronic Store API")
-            .version("1.0")
+            .version("1.0.0")
             .description("API documentation for the Electronic Store project")
             .summary("This project is done to experiment with Spring Boot.")
             .license(new License().name("Apache 2.0").url("http://springdoc.org")));
