@@ -7,6 +7,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.ProductDto;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@Tag(name = "Product Management", description = "Operations related to managing products in the E-Store")
 public class ProductController {
   Logger logger = LoggerFactory.getLogger(ProductController.class);
   @Autowired

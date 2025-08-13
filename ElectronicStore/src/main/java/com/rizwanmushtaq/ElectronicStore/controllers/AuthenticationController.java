@@ -4,6 +4,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.*;
 import com.rizwanmushtaq.ElectronicStore.entities.User;
 import com.rizwanmushtaq.ElectronicStore.security.JwtHelper;
 import com.rizwanmushtaq.ElectronicStore.services.RefreshTokenService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Auth Management", description = "Operations related to managing user authentication in the E-Store")
 public class AuthenticationController {
   private Logger logger =
       LoggerFactory.getLogger(AuthenticationController.class);

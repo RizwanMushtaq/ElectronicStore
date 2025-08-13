@@ -5,6 +5,7 @@ import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
 import com.rizwanmushtaq.ElectronicStore.services.FileService;
 import com.rizwanmushtaq.ElectronicStore.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Categories Management", description = "Operations related to managing product categories in the E-Store")
 public class CategoryController {
   Logger logger = LoggerFactory.getLogger(CategoryController.class);
   @Autowired

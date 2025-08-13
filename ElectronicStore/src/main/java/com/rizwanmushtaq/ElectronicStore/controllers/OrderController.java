@@ -6,6 +6,7 @@ import com.rizwanmushtaq.ElectronicStore.dtos.CreateOrderRequest;
 import com.rizwanmushtaq.ElectronicStore.dtos.OrderDto;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
 import com.rizwanmushtaq.ElectronicStore.services.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
+@Tag(name = "Order Management", description = "Operations related to managing orders in the E-Store")
 public class OrderController {
   Logger logger = LoggerFactory.getLogger(OrderController.class);
   @Autowired
