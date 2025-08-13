@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Builder
+@Schema(description = "Details about a user")
 public class UserDto {
   private String id;
   private String username;
