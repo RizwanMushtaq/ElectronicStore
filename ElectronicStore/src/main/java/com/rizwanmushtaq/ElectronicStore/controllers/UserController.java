@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.ImageResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
@@ -81,7 +82,7 @@ public class UserController {
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PutMapping("/{userId}")
   public ResponseEntity<UserDto> updateUser(@PathVariable String userId,
                                             @Valid @RequestBody UserDto userDto) {
@@ -89,7 +90,7 @@ public class UserController {
         HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @DeleteMapping("/{userId}")
   public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable String userId) {
     logger.info("called deleteUser");

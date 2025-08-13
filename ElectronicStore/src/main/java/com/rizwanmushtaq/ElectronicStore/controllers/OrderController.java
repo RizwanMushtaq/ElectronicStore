@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @Tag(name = "Order Management", description = "Operations related to managing orders in the E-Store")
-@SecurityRequirement(name = "Bearer Authentication")
+@SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
 public class OrderController {
   Logger logger = LoggerFactory.getLogger(OrderController.class);
   @Autowired

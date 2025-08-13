@@ -13,9 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
   @Bean
   public OpenAPI customOpenAPI() {
-    final String securitySchemeName = "Bearer Authentication";
     SecurityScheme bearerAuthScheme = new SecurityScheme()
-        .name(securitySchemeName)
+        .name(AppConstants.SECURITY_SCHEMA_NAME)
         .type(SecurityScheme.Type.HTTP)
         .scheme("bearer")
         .bearerFormat("JWT");
@@ -32,7 +31,7 @@ public class OpenApiConfig {
             .license(new License().name("Apache 2.0").url("http://springdoc.org"))
         )
         .components(new Components().addSecuritySchemes(
-            securitySchemeName,
+            AppConstants.SECURITY_SCHEMA_NAME,
             bearerAuthScheme
         ));
   }

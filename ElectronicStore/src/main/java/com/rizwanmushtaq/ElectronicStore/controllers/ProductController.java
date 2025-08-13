@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.dtos.ApiResponseMessage;
 import com.rizwanmushtaq.ElectronicStore.dtos.ImageResponse;
 import com.rizwanmushtaq.ElectronicStore.dtos.PageableResponse;
@@ -38,7 +39,7 @@ public class ProductController {
   @Value("${product.image.path}")
   private String imageUploadPath;
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PostMapping
   public ResponseEntity<ProductDto> create(@Valid @RequestBody ProductDto productDto) {
     logger.info("Creating new product with: {}", productDto);
@@ -81,7 +82,7 @@ public class ProductController {
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PutMapping("/{productId}")
   public ResponseEntity<ProductDto> updateById(@PathVariable String productId,
                                                @Valid @RequestBody ProductDto productDto) {
@@ -90,7 +91,7 @@ public class ProductController {
     return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @DeleteMapping("/{productId}")
   public ResponseEntity<ApiResponseMessage> deleteById(@PathVariable String productId) {
     logger.info("Deleting product with ID: {}", productId);
@@ -104,7 +105,7 @@ public class ProductController {
     return new ResponseEntity<>(responseMessage, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PostMapping("/image/{productId}")
   public ResponseEntity<ImageResponse> uploadImage(
       @RequestParam("productImage") MultipartFile image,

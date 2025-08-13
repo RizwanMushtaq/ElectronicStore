@@ -1,5 +1,6 @@
 package com.rizwanmushtaq.ElectronicStore.controllers;
 
+import com.rizwanmushtaq.ElectronicStore.config.AppConstants;
 import com.rizwanmushtaq.ElectronicStore.dtos.*;
 import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.services.CategoryService;
@@ -37,7 +38,7 @@ public class CategoryController {
   @Value("${category.image.path}")
   private String imageUploadPath;
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PostMapping
   public ResponseEntity<CategoryDto> create(@Valid @RequestBody CategoryDto categoryDto) {
     logger.info("Creating new category with: {}", categoryDto);
@@ -71,7 +72,7 @@ public class CategoryController {
     return new ResponseEntity<>(categoryService.getByTitle(categoryTile), HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PutMapping("/{categoryId}")
   public ResponseEntity<CategoryDto> updateCategoryById(
       @PathVariable String categoryId,
@@ -81,7 +82,7 @@ public class CategoryController {
     return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @DeleteMapping("/{categoryId}")
   public ResponseEntity<ApiResponseMessage> deleteCategoryById(@PathVariable String categoryId) {
     categoryService.deleteById(categoryId);
@@ -93,7 +94,7 @@ public class CategoryController {
     return new ResponseEntity<>(apiResponseMessage, HttpStatus.OK);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PostMapping("/image/{categoryId}")
   public ResponseEntity<ImageResponse> uploadImage(
       @RequestParam("categoryImage") MultipartFile image,
@@ -132,7 +133,7 @@ public class CategoryController {
     }
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PostMapping("/{categoryId}/products")
   public ResponseEntity<ProductDto> createProductWithCategory(
       @PathVariable String categoryId,
@@ -143,7 +144,7 @@ public class CategoryController {
     return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
   }
 
-  @SecurityRequirement(name = "Bearer Authentication")
+  @SecurityRequirement(name = AppConstants.SECURITY_SCHEMA_NAME)
   @PutMapping("/{categoryId}/products/{productId}")
   public ResponseEntity<ProductDto> updateProductWithCategory(
       @PathVariable String categoryId,
