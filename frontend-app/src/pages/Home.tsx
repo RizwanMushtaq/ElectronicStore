@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetProducts } from "./utils/hooks/useGetProducts";
+import { useGetProducts } from "../hooks/useGetProducts";
 
 const Home: React.FC = () => {
   const { data, isLoading, error } = useGetProducts();
