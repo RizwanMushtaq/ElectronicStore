@@ -38,7 +38,7 @@ public class SecurityConfig {
           @Override
           public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
-            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
+            corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:5173"));
             corsConfiguration.setAllowedMethods(List.of("*"));
             corsConfiguration.setAllowCredentials(true);
             corsConfiguration.setAllowedHeaders(List.of("*"));
