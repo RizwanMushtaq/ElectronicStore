@@ -1,1 +1,0 @@
-# EStore - AngularApp
