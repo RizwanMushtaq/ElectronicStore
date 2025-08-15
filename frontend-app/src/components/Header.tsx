@@ -1,7 +1,23 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import {
+  clearLocalStorage,
+  getAuthToken,
+  getRefreshToken,
+  getUser,
+} from "../utils/localStorage";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = getAuthToken();
+    const refreshToken = getRefreshToken();
+    const user = getUser();
+    const isAuthenticated = !!token && !!refreshToken && !!user;
+    setIsLoggedIn(isAuthenticated);
+  }, []);
 
   return (
     <header className="shadow-md">
@@ -34,12 +50,29 @@ const Header: React.FC = () => {
             Orders
           </a>
         </nav>
-        <button
-          onClick={() => navigate("/login")}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
-        >
-          Login
-        </button>
+        {isLoggedIn ? (
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-400">
+              {getUser()?.username || "User"}
+            </span>
+            <button
+              onClick={() => {
+                clearLocalStorage();
+                navigate("/login");
+              }}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => navigate("/login")}
+            className="text-gray-400 hover:text-blue-600 transition cursor-pointer"
+          >
+            Login
+          </button>
+        )}
       </div>
     </header>
   );
