@@ -39,3 +39,10 @@ export const getUser = (): User | null => {
 export const clearLocalStorage = (): void => {
   localStorage.clear();
 };
+
+export const isAuthenticatedUser = () => {
+  const token = getAuthToken();
+  const refreshToken = getRefreshToken();
+  const user = getUser();
+  return !!token && !!refreshToken && !!user;
+};

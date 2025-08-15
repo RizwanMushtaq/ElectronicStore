@@ -1,14 +1,15 @@
 import type { ReactNode } from "react";
 
 import Login from "../pages/Login";
+import { isAuthenticatedUser } from "../utils/localStorage";
 
 interface AuthGuardProps {
   children: ReactNode;
 }
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const token = localStorage.getItem("jwt");
+  const isAuthenticated = isAuthenticatedUser();
 
-  if (!token) {
+  if (!isAuthenticated) {
     return <Login></Login>;
   }
 

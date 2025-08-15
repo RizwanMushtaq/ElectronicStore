@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   clearLocalStorage,
-  getAuthToken,
-  getRefreshToken,
   getUser,
+  isAuthenticatedUser,
 } from "../utils/localStorage";
 
 const Header: React.FC = () => {
@@ -12,11 +11,7 @@ const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = getAuthToken();
-    const refreshToken = getRefreshToken();
-    const user = getUser();
-    const isAuthenticated = !!token && !!refreshToken && !!user;
-    setIsLoggedIn(isAuthenticated);
+    setIsLoggedIn(isAuthenticatedUser());
   }, []);
 
   return (
