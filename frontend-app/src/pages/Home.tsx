@@ -1,18 +1,11 @@
-import React from "react";
-import { useGetProducts } from "../hooks/useGetProducts";
+import Header from "../components/Header";
+import Products from "../components/Products";
 
 const Home: React.FC = () => {
-  const { data, isLoading, error } = useGetProducts();
-
-  if (isLoading) return "Loading";
-
-  if (error) return "An error has occurred: " + error.message;
-
   return (
     <>
-      <h1 className="text-2xl font-mono underline"> Electronic Store </h1>
-      {data &&
-        data.content.map((item) => <div key={item.id}>{item.title}</div>)}
+      <Header />
+      <Products />
     </>
   );
 };
