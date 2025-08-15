@@ -4,7 +4,6 @@ import { useGetCart } from "../hooks/useGetCart";
 
 const Cart: React.FC = () => {
   const { userId } = useAuthContext();
-  console.log("User ID from AuthContext:", userId);
 
   const { isPending, isError, data, error } = useGetCart(userId);
 
