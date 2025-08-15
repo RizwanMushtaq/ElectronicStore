@@ -1,6 +1,5 @@
 package com.rizwanmushtaq.ElectronicStore.services;
 
-import com.rizwanmushtaq.ElectronicStore.exceptions.ResourceNotFoundException;
 import com.rizwanmushtaq.ElectronicStore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,7 @@ public class CustomUserDetailService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userRepository.findByUsername(username).orElseThrow(
-        () -> new ResourceNotFoundException("User not found with username: " + username)
+        () -> new UsernameNotFoundException("User not found with username: " + username)
     );
   }
 }
