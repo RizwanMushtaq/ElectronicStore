@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtHelper {
-  public static final long TOKEN_VALIDITY = 5 * 60 * 1000;
+  public static final long TOKEN_VALIDITY = 5 * 24 * 60 * 60 * 1000;
   public static final String SECRET_KEY =
       "secrethgjjjjjjjjjjjjjjjjjjjjjjzzzzzzzzzzzzzzzzzzzztttttttttttttttttttttttttttttttttffffffffffffffffffffffffffffffggggggggg";
 
