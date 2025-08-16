@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         .billingAddress(orderDto.getBillingAddress())
         .billingPhone(orderDto.getBillingPhone())
         .id(Helper.getUUID())
+        .orderedDate(new Date())
         .user(user)
         .build();
     AtomicReference<Integer> orderAmount = new AtomicReference<>(0);
