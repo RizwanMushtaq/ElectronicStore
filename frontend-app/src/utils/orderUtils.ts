@@ -9,7 +9,7 @@ export interface Order {
   billingName: string;
   billingPhone: string;
   billingAddress: string;
-  orderDate: string;
+  orderedDate: string;
   deliveredDate: string | null;
   user: User;
 }
