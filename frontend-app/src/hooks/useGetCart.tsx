@@ -40,7 +40,7 @@ export function useGetCart(userId: string) {
     queryKey: ["cart"],
     queryFn: () => fetchCart(userId),
     staleTime: 1000 * 60 * 5,
-    retry: 2,
+    retry: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: "always",
   });
