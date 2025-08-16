@@ -1,17 +1,28 @@
 import { useGetProducts, type Product } from "../hooks/useGetProducts";
 import { useState } from "react";
+import { addItemToCartByUserId } from "../utils/cartUtils";
+import { useAuthContext } from "../auth/AuthContext";
 
 const Products: React.FC = () => {
+  const { userId } = useAuthContext();
   const { data, isLoading, error } = useGetProducts();
   const [addingToCart, setAddingToCart] = useState<string | null>(null);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = async (product: Product) => {
     setAddingToCart(product.id);
-    // TODO: Implement actual add to cart logic (API call, context, etc.)
-    setTimeout(() => {
+    try {
+      await addItemToCartByUserId({
+        productId: product.id,
+        quantity: 1,
+        userId,
+      });
       setAddingToCart(null);
       alert(`Added ${product.title} to cart!`);
-    }, 500);
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+      setAddingToCart(null);
+      alert("Failed to add item to cart. Please try again.");
+    }
   };
 
   if (isLoading) return "Loading...";

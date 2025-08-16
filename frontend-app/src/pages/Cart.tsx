@@ -6,6 +6,7 @@ const Cart: React.FC = () => {
   const { userId } = useAuthContext();
 
   const { isPending, isError, data, error } = useGetCart(userId);
+  console.log("Cart data:", data);
 
   if (isPending) {
     return (
@@ -20,6 +21,7 @@ const Cart: React.FC = () => {
   }
 
   if (isError) {
+    console.error("Error fetching cart:", error);
     return (
       <>
         <Header></Header>

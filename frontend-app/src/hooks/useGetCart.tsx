@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Product } from "./useGetProducts";
 import type { User } from "../auth/login";
+import { getAuthToken } from "../utils/localStorage";
 
 export interface CartItem {
   id: number;
@@ -17,11 +18,16 @@ export interface Cart {
 }
 
 async function fetchCart(userId: string): Promise<Cart> {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL + "/cart/" + userId;
-  const response = await fetch(apiUrl);
+  const token = getAuthToken() || "dummyToken";
+  const apiUrl = import.meta.env.VITE_API_BASE_URL + "/carts/" + userId;
 
-  const data = await response.json();
-  console.log("Data - Cart fetched:", data);
+  const response = await fetch(apiUrl, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (!response.ok) {
     throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -35,5 +41,7 @@ export function useGetCart(userId: string) {
     queryFn: () => fetchCart(userId),
     staleTime: 1000 * 60 * 5,
     retry: 2,
+    refetchOnWindowFocus: false,
+    refetchOnMount: "always",
   });
 }

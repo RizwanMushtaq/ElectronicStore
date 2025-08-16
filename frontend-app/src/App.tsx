@@ -14,7 +14,22 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <AuthGuard>
+                <Home />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <AuthGuard>
+                <Home />
+              </AuthGuard>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="/cart"

@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       setError(null);
       const responseData: LoginResponse = await loginResponse.json();
       saveLoginResponseToLocalStorage(responseData);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Login error:", error);
       setError("An error occurred while logging in. Please try again.");
@@ -40,13 +40,13 @@ const Login: React.FC = () => {
   return (
     <div className="flex justify-center items-center">
       <div className="shadow-md rounded-lg p-8 w-full max-w-sm">
-        <h4
-          onClick={() => navigate("/")}
-          className="font-light mb-10 text-blue-400 cursor-pointer"
-        >
-          back to Electronic-Store
-        </h4>
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        <h2 className=" font-bold text-center mb-6">
+          Welcome to the Electronic Store
+        </h2>
+        <p className="text-center text-gray-400 mb-4">
+          Please login to continue shopping.
+        </p>
+
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Username</label>
