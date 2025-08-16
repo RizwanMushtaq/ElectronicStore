@@ -25,7 +25,11 @@ const Cart: React.FC = () => {
         <Header></Header>
         <div className="container mx-auto py-8">
           <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
-          <p className="text-red-600">Error loading cart: {error.message}</p>
+          <p className="text-red-600">
+            {error.message.includes("404")
+              ? "Cart not found."
+              : "An error occurred while loading your cart."}
+          </p>
         </div>
       </>
     );
