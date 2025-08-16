@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend-app
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=http://localhost:8081/api
+    restart: always
+
+  backend:
+    container_name: backend
+    build:
+      context: ./electronic_store
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+    restart: always
+
+  db:
+    container_name: db
+    image: "mysql"
+    ports:
+      - "3309:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=electronic_store
+    volumes:
+      - db-data:/var/lib/mysql/data
+    restart: always
+
+volumes:
+  db-data:
