@@ -1,6 +1,6 @@
 # Electronic Store - Full Stack Web Application
 
-An Prototype of end-to-end e-commerce platform for electronics, built with modern technologies and best practices.
+A Prototype of end-to-end e-commerce platform for electronics, built with modern technologies and best practices.
 
 ---
 
