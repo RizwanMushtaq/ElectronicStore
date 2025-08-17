@@ -42,7 +42,7 @@ An Prototype of end-to-end e-commerce platform for electronics, built with moder
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/ElectronicStore.git
+   git clone https://github.com/RizwanMushtaq/ElectronicStore
    cd ElectronicStore
    ```
 2. Build and start all services:
@@ -52,6 +52,7 @@ An Prototype of end-to-end e-commerce platform for electronics, built with moder
 3. Access the app:
    - Frontend: [http://localhost](http://localhost)
    - Backend API: [http://localhost:8081/api](http://localhost:8081/api)
+   - Swagger UI: [http://localhost:8081/api/swagger-ui/index.html](http://localhost:8081/api/swagger-ui/index.html)
 
 ---
 
