@@ -1,6 +1,6 @@
 # Electronic Store - Full Stack Web Application
 
-A Prototype of end-to-end e-commerce platform for electronics, built with modern technologies and best practices.
+A Prototype of end-to-end e-commerce platform for electronics, built with modern technologies.
 
 ---
 
@@ -65,3 +65,23 @@ A Prototype of end-to-end e-commerce platform for electronics, built with modern
 - **Order**: Place and view orders
 
 ---
+
+## Frontend App References
+
+Below are some screenshots of the application:
+
+### Home Page
+
+![Home Page](project-references/frontend-home.png)
+
+### Cart Page
+
+![Cart Page](project-references/frontend-cart.png)
+
+### Orders Page
+
+![Orders Page](project-references/frontend-orders.png)
+
+### API Documentation (Swagger UI)
+
+![Swagger UI](project-references/swagger-ui-screenshot.png)
