@@ -47,7 +47,13 @@ const Login: React.FC = () => {
           Please login to continue shopping.
         </p>
 
-        <div className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
           <div>
             <label className="block text-sm font-medium mb-1">Username</label>
             <input
@@ -72,13 +78,13 @@ const Login: React.FC = () => {
 
           <button
             className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-            onClick={handleLogin}
+            type="submit"
           >
             Login
           </button>
 
           {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-        </div>
+        </form>
       </div>
     </div>
   );
