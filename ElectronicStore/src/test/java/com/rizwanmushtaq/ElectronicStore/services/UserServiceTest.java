@@ -87,7 +87,7 @@ public class UserServiceTest {
     when(passwordEncoder.encode("plainPassword")).thenReturn("encodedPassword");
     when(modelMapper.map(userDto, User.class)).thenReturn(userEntity);
     when(roleRepository.findByName("ROLE_NORMAL")).thenReturn(Optional.empty());
-    assertThrows(ResourceNotFoundException.class, () -> userService.createUser(userDto));
+    assertThrowsExactly(ResourceNotFoundException.class, () -> userService.createUser(userDto));
     verify(roleRepository).findByName("ROLE_NORMAL");
   }
 }
